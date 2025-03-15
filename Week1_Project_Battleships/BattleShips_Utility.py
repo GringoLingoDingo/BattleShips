@@ -85,3 +85,35 @@ def computer_attack_placement(variable):
          variable [x][y] = "X"
     else:
         variable [x][y] = "O"
+
+
+
+def shoot_square(board):
+   y = (int(input("Fire at which row!")))
+   x = (int(input("Fire at which column?")))
+
+   if board[y][x] == "B":
+         
+         board[y][x] = "X"
+         print(board)
+         # Give point to player
+         # Create a boolean that checks if it is already a bonus turn, if so, give another point.
+         # Give bonus turn to player
+         
+   else:
+       board[y][x] = "O"
+       print(board)
+       # Swap over the turns to the other player
+
+def place_pieces(variable):
+    y = (int(input("place ship on which row!")))
+    x = (int(input("place ship on which column?")))
+    
+    #tile = [(x,y)]
+    variable[x][y]= "B"
+    return variable
+
+
+def check_victory(user, computer):
+        return ('B' not in user) or ('B' not in computer)
+

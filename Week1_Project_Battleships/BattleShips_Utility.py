@@ -32,7 +32,14 @@ def computer_pieces_count(Board_H, boats_placed):
             boats_placed += 1
 
 
-
+def player_pieces_count(Board_P, boats_placed):
+    while boats_placed < BOATS_TO_PLACE:
+            Board_P = place_boat(Board_P)
+            if boats_placed < SLOOPS_TO_PLACE:
+                Board_P = place_sloop(Board_P)
+            if boats_placed < FRIGATES_TO_PLACE:
+                Board_P = place_frigate(Board_P)
+            boats_placed += 1
 
 
 
@@ -61,68 +68,73 @@ class Gamehandler():
 
 
 def computer_boat_placement(variable):
-    x = random.randint(1,9)
-    y = random.randint(1,9)
-    orientacion = random.choice(["Horizontal", "Vertical"])
-    boat_location = [(x, y)]
-    if orientacion == "Horizontal":
-        boat_location.append((x, y + 1))
-    else:
-        boat_location.append((x + 1, y))
-    
-    for boat_tiles in boat_location:
-        if variable[boat_tiles[0], boat_tiles[1]] == "B":
-            return computer_boat_placement(variable)
-    else:  #maybe this is wrong? do you need an else here??
+    for _ in range(100):
+        x = random.randint(1,9)
+        y = random.randint(1,9)
+        orientacion = random.choice(["Horizontal", "Vertical"])
+        boat_location = [(x, y)]
+        if orientacion == "Horizontal":
+            boat_location.append((x, y + 1))
+        else:
+            boat_location.append((x + 1, y))
+
         for boat_tiles in boat_location:
-            variable[boat_tiles] = "B"
-        return variable
+            if variable[boat_tiles[0], boat_tiles[1]] in ["B", "S", "F"]:
+                break
+        else:  #maybe this is wrong? do you need an else here??
+            for boat_tiles in boat_location:
+                variable[boat_tiles] = "B"
+            return variable
+    return variable
 
 
 def computer_sloop_placement(variable):
-    x = random.randint(1,8)
-    y = random.randint(1,8)
-    orientacion = random.choice(["Horizontal", "Vertical"])
-    boat_location = [(x, y)]
-    if orientacion == "Horizontal":
-        boat_location.append((x, y + 1))
-        boat_location.append((x, y + 2))
-    else:
-        boat_location.append((x + 1, y))
-        boat_location.append((x + 2, y))
-
-    for boat_tiles in boat_location:
-        if variable[boat_tiles[0], boat_tiles[1]] == "B":
-            return computer_boat_placement(variable)
-    else:
+    for _ in range(100):
+        x = random.randint(1,8)
+        y = random.randint(1,8)
+        orientacion = random.choice(["Horizontal", "Vertical"])
+        boat_location = [(x, y)]
+        if orientacion == "Horizontal":
+            boat_location.append((x, y + 1))
+            boat_location.append((x, y + 2))
+        else:
+            boat_location.append((x + 1, y))
+            boat_location.append((x + 2, y))
+    
         for boat_tiles in boat_location:
-            variable[boat_tiles] = "B"
-        return variable
+            if variable[boat_tiles[0], boat_tiles[1]] in ["B", "S", "F"]:
+                break
+        else:
+            for boat_tiles in boat_location:
+                variable[boat_tiles] = "S"
+            return variable
+    return variable
 
 
 
 def computer_frigate_placement(variable):
-    x = random.randint(1,7)
-    y = random.randint(1,7)
-    orientacion = random.choice(["Horizontal", "Vertical"])
-    boat_location = [(x, y)]
-    if orientacion == "Horizontal":
-        boat_location.append((x, y + 1))
-        boat_location.append((x, y + 2))
-        boat_location.append((x, y + 3))
-    else:
-        boat_location.append((x + 1, y))
-        boat_location.append((x + 2, y))
-        boat_location.append((x + 3, y))
-        
-    for boat_tiles in boat_location:
-        if variable[boat_tiles[0], boat_tiles[1]] == "B":
-            return computer_boat_placement(variable)
-    else:
-        for boat_tiles in boat_location:
-            variable[boat_tiles] = "B"
-        return variable
+    for _ in range(100):
+        x = random.randint(1,7)
+        y = random.randint(1,7)
+        orientacion = random.choice(["Horizontal", "Vertical"])
+        boat_location = [(x, y)]
+        if orientacion == "Horizontal":
+            boat_location.append((x, y + 1))
+            boat_location.append((x, y + 2))
+            boat_location.append((x, y + 3))
+        else:
+            boat_location.append((x + 1, y))
+            boat_location.append((x + 2, y))
+            boat_location.append((x + 3, y))
 
+        for boat_tiles in boat_location:
+            if variable[boat_tiles[0], boat_tiles[1]] in ["B", "S", "F"]:
+                break
+        else:
+            for boat_tiles in boat_location:
+                variable[boat_tiles] = "F"
+            return variable
+    return variable
 
 
 def computer_attack_placement(variable):
@@ -155,13 +167,90 @@ def shoot_square(board):
        print(board)
        # Swap over the turns to the other player
 
-def place_pieces(variable):
-    y = (int(input("place ship on which row!")))
-    x = (int(input("place ship on which column?")))
+
+def place_boat(variable):
+    x = (int(input("place boat on which row!")))
+    y = (int(input("place boat on which column?")))
+
+    orientacion = str(input("Do you want it pointing down or to the right? Length 2(d or r)"))
+
+    boat_location = [(x, y)]
+    if orientacion == "r":
+        boat_location.append((x, y + 1))
+    else:
+        boat_location.append((x + 1, y))
     
-    #tile = [(x,y)]
-    variable[x][y]= "B"
-    return variable
+    for boat_tiles in boat_location:
+        if variable[boat_tiles[0], boat_tiles[1]] in ["B", "S", "F"]:
+            break
+    else:  #maybe this is wrong? do you need an else here??
+        for boat_tiles in boat_location:
+            variable[boat_tiles] = "B"
+        print(variable)
+        return variable
+
+
+
+
+
+
+def place_sloop(variable):
+    x = (int(input("place ship on which row!")))
+    y = (int(input("place ship on which column?")))
+
+    orientacion = str(input("Do you want it pointing down or to the right? Length 3 (d or r)"))
+
+    boat_location = [(x, y)]
+    if orientacion == "r":
+        boat_location.append((x, y + 1))
+        boat_location.append((x, y + 2))
+    else:
+        boat_location.append((x + 1, y))
+        boat_location.append((x + 2, y))
+
+    for boat_tiles in boat_location:
+        if variable[boat_tiles[0], boat_tiles[1]] in ["B", "S", "F"]:
+            break
+    else:
+        for boat_tiles in boat_location:
+            variable[boat_tiles] = "S"
+        print(variable)
+        return variable
+
+
+
+
+
+
+
+def place_frigate(variable):
+    x = (int(input("place ship on which row!")))
+    y = (int(input("place ship on which column?")))
+
+    orientacion = str(input("Do you want it pointing down or to the right? Length 4(d or r)"))
+
+    boat_location = [(x, y)]
+    if orientacion == "r":
+        boat_location.append((x, y + 1))
+        boat_location.append((x, y + 2))
+    else:
+        boat_location.append((x + 1, y))
+        boat_location.append((x + 2, y))
+
+    for boat_tiles in boat_location:
+        if variable[boat_tiles[0], boat_tiles[1]] in ["B", "S", "F"]:
+            break
+    else:
+        for boat_tiles in boat_location:
+            variable[boat_tiles] = "S"
+        print(variable)
+        return variable
+
+
+
+
+
+
 
 
 #def check_victory(user, computer):

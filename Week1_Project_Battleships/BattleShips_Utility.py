@@ -150,21 +150,21 @@ def computer_attack_placement(variable):
 
 
 
-def shoot_square(board):
+def shoot_square(board_seen, board_unseen):
    y = (int(input("Fire at which row!")))
    x = (int(input("Fire at which column?")))
 
-   if board[y][x] == "B":
+   if board_unseen[x][y] == "B" or board_unseen[x][y] == "S" or board_unseen[x][y] == "F":
          
-         board[y][x] = "X"
-         print(board)
+         board_seen[x][y] = "X"
+         print(board_seen)
          # Give point to player
          # Create a boolean that checks if it is already a bonus turn, if so, give another point.
          # Give bonus turn to player
          
    else:
-       board[y][x] = "O"
-       print(board)
+       board_seen[x][y] = "O"
+       print(board_seen)
        # Swap over the turns to the other player
 
 

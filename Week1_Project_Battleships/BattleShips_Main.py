@@ -1,5 +1,6 @@
-from BattleShips_Utility import testing_import_of_functions
+from BattleShips_Utility import create_board
+
 import numpy as np
 
-print(testing_import_of_functions)
-#board_1 = create_board()S
+
+board_1 = create_board()

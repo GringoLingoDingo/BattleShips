@@ -145,6 +145,13 @@ def computer_attack_placement(variable):
         computer_attack_placement(variable)
     elif variable [x][y] == "B":
          variable [x][y] = "X"
+         print("The computer has hit your Boat!")
+    elif variable [x][y] == "S":
+         variable [x][y] = "X"
+         print("The computer has hit your Sloop!")
+    elif variable [x][y] == "F":
+         variable [x][y] = "X"
+         print("the computer has hit your Frigate!")
     else:
         variable [x][y] = "O"
 
@@ -158,12 +165,14 @@ def shoot_square(board_seen, board_unseen):
          
          board_seen[x][y] = "X"
          print(board_seen)
+         print("Thats a direct hit!")
          # Give point to player
          # Create a boolean that checks if it is already a bonus turn, if so, give another point.
          # Give bonus turn to player
          
    else:
        board_seen[x][y] = "O"
+       print("You missed!")
        print(board_seen)
        # Swap over the turns to the other player
 

@@ -138,6 +138,10 @@ def place_pieces(variable):
     return variable
 
 
-def check_victory(user, computer):
-        return ('B' not in user) or ('B' not in computer)
+#def check_victory(user, computer):
+        # return ('B' not in user) or ('B' not in computer)
+
+
+def testing_import_of_functions():
+    return "This import worked successfully!"
 

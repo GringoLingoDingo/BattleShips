@@ -1,6 +1,30 @@
 import random
 import numpy as np
 
+BOATS_TO_PLACE = 3
+SLOOPS_TO_PLACE = 2
+FRIGATES_TO_PLACE = 1
+
+class Gamehandler():
+    global BOATS_TO_PLACE
+
+    def __init__(self):
+        self.Board_1 = create_board()
+        self.Board_2 = create_board()
+        self.Board_3 = create_board()
+        self.boats_placed = 0
+        while self.boats_placed < BOATS_TO_PLACE:
+            self.Board_3 = computer_boat_placement(self.Board_3)
+            if self.boats_placed < SLOOPS_TO_PLACE:
+                self.Board_3 = computer_sloop_placement(self.Board_3)
+            if self.boats_placed < FRIGATES_TO_PLACE:
+                self.Board_3 = computer_frigate_placement(self.Board_3)
+            self.boats_placed += 1
+        print(self.Board_3)
+        
+O = Gamehandler()
+
+
 def create_board(size=(11, 11)):
     # Initialize an 11x11 board with underscores
     board = np.full(size, '_') 

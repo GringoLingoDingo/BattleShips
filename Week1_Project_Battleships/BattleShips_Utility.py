@@ -5,26 +5,6 @@ BOATS_TO_PLACE = 3
 SLOOPS_TO_PLACE = 2
 FRIGATES_TO_PLACE = 1
 
-class Gamehandler():
-    global BOATS_TO_PLACE
-
-    def __init__(self):
-        self.Board_1 = create_board()
-        self.Board_2 = create_board()
-        self.Board_3 = create_board()
-        self.boats_placed = 0
-        while self.boats_placed < BOATS_TO_PLACE:
-            self.Board_3 = computer_boat_placement(self.Board_3)
-            if self.boats_placed < SLOOPS_TO_PLACE:
-                self.Board_3 = computer_sloop_placement(self.Board_3)
-            if self.boats_placed < FRIGATES_TO_PLACE:
-                self.Board_3 = computer_frigate_placement(self.Board_3)
-            self.boats_placed += 1
-        print(self.Board_3)
-        
-O = Gamehandler()
-
-
 def create_board(size=(11, 11)):
     # Initialize an 11x11 board with underscores
     board = np.full(size, '_') 
@@ -42,6 +22,43 @@ def create_board(size=(11, 11)):
     
     return board
 
+def computer_pieces_count(Board_H, boats_placed):
+    while boats_placed < BOATS_TO_PLACE:
+            Board_H = computer_boat_placement(Board_H)
+            if boats_placed < SLOOPS_TO_PLACE:
+                Board_H = computer_sloop_placement(Board_H)
+            if boats_placed < FRIGATES_TO_PLACE:
+                Board_H = computer_frigate_placement(Board_H)
+            boats_placed += 1
+
+
+
+
+
+
+
+
+class Gamehandler():
+    global BOATS_TO_PLACE
+
+    def __init__(self):
+        self.Board_1 = create_board()
+        self.Board_2 = create_board()
+        self.Board_3 = create_board()
+        self.boats_placed = 0
+        while self.boats_placed < BOATS_TO_PLACE:
+            self.Board_3 = computer_boat_placement(self.Board_3)
+            if self.boats_placed < SLOOPS_TO_PLACE:
+                self.Board_3 = computer_sloop_placement(self.Board_3)
+            if self.boats_placed < FRIGATES_TO_PLACE:
+                self.Board_3 = computer_frigate_placement(self.Board_3)
+            self.boats_placed += 1
+        print(self.Board_3)
+        
+
+
+
+
 
 def computer_boat_placement(variable):
     x = random.randint(1,9)
@@ -54,11 +71,12 @@ def computer_boat_placement(variable):
         boat_location.append((x + 1, y))
     
     for boat_tiles in boat_location:
-        if ([boat_tiles]) == "B":
-            computer_boat_placement(variable)
+        if variable[boat_tiles[0], boat_tiles[1]] == "B":
+            return computer_boat_placement(variable)
     else:  #maybe this is wrong? do you need an else here??
         for boat_tiles in boat_location:
             variable[boat_tiles] = "B"
+        return variable
 
 
 def computer_sloop_placement(variable):
@@ -67,16 +85,19 @@ def computer_sloop_placement(variable):
     orientacion = random.choice(["Horizontal", "Vertical"])
     boat_location = [(x, y)]
     if orientacion == "Horizontal":
+        boat_location.append((x, y + 1))
         boat_location.append((x, y + 2))
     else:
+        boat_location.append((x + 1, y))
         boat_location.append((x + 2, y))
 
     for boat_tiles in boat_location:
-        if ([boat_tiles]) == "B":
-            computer_boat_placement(variable)
+        if variable[boat_tiles[0], boat_tiles[1]] == "B":
+            return computer_boat_placement(variable)
     else:
         for boat_tiles in boat_location:
             variable[boat_tiles] = "B"
+        return variable
 
 
 
@@ -86,16 +107,21 @@ def computer_frigate_placement(variable):
     orientacion = random.choice(["Horizontal", "Vertical"])
     boat_location = [(x, y)]
     if orientacion == "Horizontal":
+        boat_location.append((x, y + 1))
+        boat_location.append((x, y + 2))
         boat_location.append((x, y + 3))
     else:
+        boat_location.append((x + 1, y))
+        boat_location.append((x + 2, y))
         boat_location.append((x + 3, y))
         
     for boat_tiles in boat_location:
-        if ([boat_tiles]) == "B":
-            computer_boat_placement(variable)
+        if variable[boat_tiles[0], boat_tiles[1]] == "B":
+            return computer_boat_placement(variable)
     else:
         for boat_tiles in boat_location:
             variable[boat_tiles] = "B"
+        return variable
 
 
 

@@ -21,18 +21,23 @@ BSU.computer_pieces_count(board_H, starting_boats_CPU)
 
 BSU.player_pieces_count(board_P, starting_boats_PC)
 
+#This should be  a function you call from Utilities..
 for _ in range(80):
     if BSU.no_ships_left(board_P):
         print(f"{Playername} has no ships left! The computer wins!")
         break  
-    else:
-        BSU.shoot_square(board_C, board_H)
+  
 
     if BSU.no_ships_left(board_H):
         print(f"The computer has no ships left! {Playername} wins!")
         break
+
+    if player_turn:
+        BSU.shoot_square(board_C, board_H)
     else:
         BSU.computer_attack_placement(board_P)
+
+    player_turn = not player_turn
     
     
 

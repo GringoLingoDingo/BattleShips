@@ -164,6 +164,7 @@ def shoot_square(board_seen, board_unseen):
    if board_unseen[x][y] == "B" or board_unseen[x][y] == "S" or board_unseen[x][y] == "F":
          
          board_seen[x][y] = "X"
+         board_unseen[x][y] = "X"
          print(board_seen)
          print("Thats a direct hit!")
          # Give point to player
@@ -257,13 +258,14 @@ def place_frigate(variable):
 
 
 
+def no_ships_left(board):
+    for row in board:
+        for tile in row:
+            if tile in ["B", "S", "F"]:
+                return False  
+    return True
 
 
-
-
-
-#def check_victory(user, computer):
-        # return ('B' not in user) or ('B' not in computer)
 
 
 def testing_import_of_functions():
